@@ -1,18 +1,33 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
+# Database data (không nên commit database files)
+db_data/
 
-# Other files and folders
-.settings/
+# WordPress uploads và cache
+wp_data/wp-content/uploads/
+wp_data/wp-content/cache/
+wp_data/wp-content/upgrade/
 
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
+# Log files
+*.log
 
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+# Environment files
+.env
+.env.local
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp

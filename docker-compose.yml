@@ -1,0 +1,48 @@
+services:
+  db:
+    image: mysql:5.7
+    container_name: wp_db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wp_user
+      MYSQL_PASSWORD: wp_pass
+    volumes:
+      - ./db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  wordpress:
+    image: wordpress:latest
+    container_name: wp_app
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: wp_pass
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ./wp_data:/var/www/html
+    depends_on:
+      - db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: wp_pma
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    depends_on:
+      - db
